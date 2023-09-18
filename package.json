@@ -23,7 +23,6 @@
     "deep-is": "^0.1.4",
     "doctrine": "^3.0.0",
     "escape-string-regexp": "^4.0.0",
-    "eslint": "^8.49.0",
     "eslint-scope": "^7.2.2",
     "eslint-visitor-keys": "^3.4.3",
     "espree": "^9.6.1",
@@ -100,5 +99,8 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.49.0"
+  }
 }
