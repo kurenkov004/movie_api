@@ -4,12 +4,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@100&family=Montserrat:wght@100;400&family=Mulish&display=swap" rel="stylesheet">
     <title>Documentation</title>
 </head>
 
-<body>
+<style>
+  body {
+    font-family: sans-serif;
+  }
+</style>
+
+<body>                              
   <h1>For_Reel</h1>
   <p>This project is about constructing the server-side component of a web application. The application serves to provide users access to information about different movies, directors, etc.</p>
+
+  <div>
+    <table style="border-width: 5px; border-color: darkgray;">
+      <tr style="background-color: lightgrey;">
+        <th>Business Logic</th>
+        <th>URL</th>
+        <th>HTTP Method</th>
+        <th>Request body data format</th>
+        <th>Response body data format</th>
+      </tr>
+      <tr>
+        <td>Return a list of all the movies</td>
+        <td>/movies</td>
+        <td>GET</td>
+        <td>none</td>
+        <td>a JSON object holding data about all the movies</td>
+      </tr>
+      <tr>
+        <td>Return a movie by its title</td>
+        <td>/movies/:title</td>
+        <td>GET</td>
+        <td>none</td>
+        <td>a JSON object holding data about the movie user searched for</td>
+      </tr>
+      <tr>
+        <td>Return a genre</td>
+        <td>/movies/:genre/:genreName</td>
+        <td>GET</td>
+        <td>none</td>
+        <td>a JSON object holding data about the genre user searched for</td>
+      </tr>
+      <tr>
+        <td>Return a director by name</td>
+        <td>/movies/:directors/:directorName</td>
+        <td>GET</td>
+        <td>none</td>
+        <td>a JSON object holding data about the director user searched for</td>
+      </tr>
+      <tr>
+        <td>Add new user to database</td>
+        <td>/users</td>
+        <td>POST</td>
+        <td>a JSON object listing new user info</td>
+        <td>a JSON object holding data about new user</td>
+      </tr>
+      <tr>
+        <td>Update user info</td>
+        <td>/users/:id</td>
+        <td>PUT</td>
+        <td>a JSON object listing updated user info</td>
+        <td>a JSON object holding data about updated user</td>
+      </tr>
+      <tr>
+        <td>Add movie to list of favorites</td>
+        <td>/users/:id/:movieTitle</td>
+        <td>POST</td>
+        <td>none</td>
+        <td>A message informing user the movie has been added to their favorites</td>
+      </tr>
+      <tr>
+        <td>Remove movie from list of favorites</td>
+        <td>/users/:id/:movieTitle</td>
+        <td>POST</td>
+        <td>none</td>
+        <td>A message informing user the movie has been removed their favorites</td>
+      </tr>
+      <tr>
+        <td>Delete user from directory</td>
+        <td>/users/:id</td>
+        <td>POST</td>
+        <td>none</td>
+        <td>A message informing user the profile has been deleted</td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <h3>JSON format for user info</h3>
+    <ul style="list-style-type: none;">
+      <li>{</li>
+      <li>"id": user's id number,</li>
+      <li>"name": "user's name",</li>
+      <li>"favoriteMovies": [array of favorite movies (can be left empty if desired)]</li>
+      <li>}</li>
+    </ul>
+  </div>
+
+  <div>
+    <h3>JSON format for movie info</h3>
+    <ul style="list-style-type: none;">
+      <li>{</li>
+      <li>"title": "movie title",</li>
+      <li>"director": { "name": "director name", "bio": "director bio"},</li>
+      <li>"genre": { "name": "genre name", "description": "genre description"}</li>
+      <li>}</li>
+    </ul>
+  </div>
+
 </body>
 
 </html>
