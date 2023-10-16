@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" type="text/css" href="/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@100&family=Montserrat:wght@100;400&family=Mulish&display=swap" rel="stylesheet">
@@ -13,16 +15,34 @@
 <style>
   body {
     font-family: sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.6;
+    background-color:#F5F5F5;
   }
+  * { box-sizing: border-box;}
+  .table-header {
+    background-color: #a0a0a0;
+  }
+ul {
+  list-style-type: none;
+}
+/* .shaded_row { background-color: lightgray;} */
+table, th, td {  border: 1px solid black; border-collapse: collapse; }
+
+.info_table { margin: 25px 2.5% 75px; }
+
+.page_header {margin:25px 10% 20px; text-align: center; }
 </style>
 
-<body>                              
-  <h1>For_Reel</h1>
-  <p>This project is about constructing the server-side component of a web application. The application serves to provide users access to information about different movies, directors, etc.</p>
-
-  <div>
-    <table style="border-width: 5px; border-color: darkgray;">
-      <tr style="background-color: lightgrey;">
+<body>
+  <header class="page_header">
+    <h1>For_Reel Documentation</h1>
+    <p>This project is about constructing the server-side component of a web application. The application serves to provide users access to information about different movies, directors, etc.</p>
+  </header>                              
+  <div class="info_table">
+    <table>
+      <tr class="table-header">
         <th>Business Logic</th>
         <th>URL</th>
         <th>HTTP Method</th>
@@ -36,67 +56,161 @@
         <td>none</td>
         <td>a JSON object holding data about all the movies</td>
       </tr>
-      <tr>
+      <tr class="shaded_row">
         <td>Return a movie by its title</td>
-        <td>/movies/:title</td>
+        <td>/movies/:Title</td>
         <td>GET</td>
         <td>none</td>
-        <td>a JSON object holding data about the movie user searched for</td>
+        <td>a JSON object holding data about a single movie, containing its Title, Description, ImagePath, ID, Director(and relevant info), Genre(and relevant info), Featured Actors, and its "Featured" status. Example:
+          <ul>
+            <li>{</li>
+            <li>"Title": "Silence of the Lambs",</li>
+            <li>"Description": "A young FBI cadet must receive help of an incarcerated and manipulative cannibal killer.",</li>
+            <li>"Genre": {"Name":"Thriller", "Description": "Thriller film, also known as suspense film or suspense thriller, is a broad film genre that involves excitement and suspense in the audience."}</li>
+            <li>"Director" {"Name":"Jonathan Demme", "Bio": "Robert Jonathan Demme was an American director, producer, and screenwriter.", "Birth": "1944", "Death": "2017"}</li>
+            <li>"Actors": [an array of featured actors]</li>
+            <li>"ImagePath": "silenceofthelambs.png"</li>
+            <li>"_id": "651f1943b400a5ad7efb5a37"</li>
+            <li>"Featured": true</li>
+            <li>}</li>
+          </ul>
+        </td>
       </tr>
       <tr>
-        <td>Return a genre</td>
+        <td>Return info about a genre</td>
         <td>/movies/:genre/:genreName</td>
         <td>GET</td>
         <td>none</td>
-        <td>a JSON object holding data about the genre user searched for</td>
+        <td>a JSON object holding data about the genre user searched for. Example:
+          <ul>
+            <li>{</li>
+            <li>"Name": "Fantasy",</li>
+            <li>"Description": "Fantasy is a genre of speculative fiction involving magical elements, typically set in a fictional universe and usually inspired by mythology or folklore.",</li>
+            <li>}</li>
+          </ul> 
+        </td>
       </tr>
-      <tr>
-        <td>Return a director by name</td>
+      <tr class="shaded_row">
+        <td>Return info about a director</td>
         <td>/movies/:directors/:directorName</td>
         <td>GET</td>
         <td>none</td>
-        <td>a JSON object holding data about the director user searched for</td>
+        <td>a JSON object holding data about the director user searched for. Example:
+          <ul>
+            <li>{</li>
+            <li>"Name": "Ridley Scott",</li>
+            <li>"Bio": "Sir Ridley Scott is a British filmmaker. He is best known for directing films in the science fiction, crime, and historical drama genres.",</li>
+            <li>"Birth": "30-11-1937"</li>
+            <li>}</li>
+          </ul> 
+        </td>
       </tr>
       <tr>
         <td>Add new user to database</td>
         <td>/users</td>
         <td>POST</td>
-        <td>a JSON object listing new user info</td>
-        <td>a JSON object holding data about new user</td>
+        <td>a JSON object listing new user info. Example:
+          <ul>
+            <li>{</li>
+            <li>"Username": "maryhadalittlelamb",</li>
+            <li>"Password": "lambsdontcry",</li>
+            <li>"Email": "lambs@gmail.com",</li>
+            <li>"Birthday": "01/01/1997"</li>
+            <li>}</li>
+          </ul>   
+        </td>
+        <td>a JSON object showing data about new user. Example:
+          <ul>
+            <li>{</li>
+            <li>"Username": "maryhadalittlelamb",</li>
+            <li>"Password": "lambsdontcry",</li>
+            <li>"Email": "lambs@gmail.com",</li>
+            <li>"Birthday": "1997-01-01T05:00:00.000Z",</li>
+            <li>"FavouriteMovies": [],</li>
+            <li>"_id": "6529b6d6a7fbe586c675000f"</li>
+            <li>"__v": 0</li>
+            <li>}</li>
+          </ul>
+        </td>
       </tr>
-      <tr>
+      <tr class="shaded_row">
         <td>Update user info</td>
-        <td>/users/:id</td>
+        <td>/users/:Username</td>
         <td>PUT</td>
-        <td>a JSON object listing updated user info</td>
-        <td>a JSON object holding data about updated user</td>
+        <td>a JSON object listing updated user info. Example:
+          <ul>
+            <li>{</li>
+            <li>"Username": "maryhadalittlelamb",</li>
+            <li>"Password": "lambsdontcry",</li>
+            <li>"Email": "newlambs@gmail.com",</li>
+            <li>"Birthday": "01/01/1997"</li>
+            <li>}</li>
+          </ul> 
+        </td>
+        <td>a JSON object holding data about updated user. Example:
+          <ul>
+            <li>{</li>
+            <li>"Username": "maryhadalittlelamb",</li>
+            <li>"Password": "lambsdontcry",</li>
+            <li>"Email": "newlambs@gmail.com",</li>
+            <li>"Birthday": "1997-01-01T05:00:00.000Z",</li>
+            <li>"FavouriteMovies": [],</li>
+            <li>"_id": "6529b6d6a7fbe586c675000f"</li>
+            <li>"__v": 0</li>
+            <li>}</li>
+          </ul>
+        </td>
       </tr>
       <tr>
-        <td>Add movie to list of favorites</td>
-        <td>/users/:id/:movieTitle</td>
+        <td>Add movie to list of a user's favorites</td>
+        <td>/users/:username/movies/:movieID</td>
         <td>POST</td>
         <td>none</td>
-        <td>A message informing user the movie has been added to their favorites</td>
+        <td>A JSON object showing updated user data. Example:
+          <ul>
+            <li>{</li>
+            <li>"Username": "maryhadalittlelamb",</li>
+            <li>"Password": "lambsdontcry",</li>
+            <li>"Email": "lambs@gmail.com",</li>
+            <li>"Birthday": "1997-01-01T05:00:00.000Z",</li>
+            <li>"FavouriteMovies": ["651f1943b400a5ad7efb5a37"],</li>
+            <li>"_id": "6529b6d6a7fbe586c675000f"</li>
+            <li>"__v": 0</li>
+            <li>}</li>
+          </ul>
+        </td>
       </tr>
-      <tr>
+      <tr class="shaded_row">
         <td>Remove movie from list of favorites</td>
-        <td>/users/:id/:movieTitle</td>
-        <td>POST</td>
+        <td>/users/:Username/movies/:MovieID</td>
+        <td>DELETE</td>
         <td>none</td>
-        <td>A message informing user the movie has been removed their favorites</td>
+        <td>A JSON object showing updated user data. Example:
+          <ul>
+            <li>{</li>
+            <li>"Username": "maryhadalittlelamb",</li>
+            <li>"Password": "lambsdontcry",</li>
+            <li>"Email": "lambs@gmail.com",</li>
+            <li>"Birthday": "1997-01-01T05:00:00.000Z",</li>
+            <li>"FavouriteMovies": [],</li>
+            <li>"_id": "6529b6d6a7fbe586c675000f"</li>
+            <li>"__v": 0</li>
+            <li>}</li>
+          </ul>
+        </td>
       </tr>
       <tr>
         <td>Delete user from directory</td>
-        <td>/users/:id</td>
-        <td>POST</td>
+        <td>/users/:Username</td>
+        <td>DELETE</td>
         <td>none</td>
         <td>A message informing user the profile has been deleted</td>
       </tr>
     </table>
   </div>
-  <div>
+  <!-- <div>
     <h3>JSON format for user info</h3>
-    <ul style="list-style-type: none;">
+    <ul>
       <li>{</li>
       <li>"id": user's id number,</li>
       <li>"name": "user's name",</li>
@@ -114,7 +228,7 @@
       <li>"genre": { "name": "genre name", "description": "genre description"}</li>
       <li>}</li>
     </ul>
-  </div>
+  </div> -->
 
 </body>
 
