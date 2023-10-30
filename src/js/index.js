@@ -18,7 +18,12 @@ app.use(morgan('common'));
 
 app.use(bodyParser.json());
 
-let auth = require('./auth.js')(app); //imports auth.js into the project. the "app" argument ensures that Express is availble in the auth.js file
+const { check, validationResult } = require('express-validator'); //imports expresss validator library
+
+const cors = require('cors'); //brings CORs into the app
+app.use(cors()); //activates the cors variable, allows requests from all origins by default
+
+let auth = require('./auth.js')(app); //imports auth.js into the project. the "app" argument ensures that Express is available in the auth.js file
 
 const passport = require('passport'); //requires the Passport module
 require('./passport.js'); //importrs passport.js into this project
@@ -32,16 +37,31 @@ require('./passport.js'); //importrs passport.js into this project
   Email: String,
   Birthday: Date
 }*/
+app.post('/users', 
+  [//Validation logic using express-validator
+    check('Username', 'Username is required').isLength({min: 5}),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+  ],
+  async (req, res) => {
 
-app.post('/users', async (req, res) => {
-  await Users.findOne({ Username: req.body.Username })
+  let errors = validationResult(req); //checks the validation object for errors - if an error occurs, the rest of the code will not execute 
+  
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
+  let hashedPassword = Users.hashPassword(req.body.Password); //takes the password from request body and hashes it before it's stored in the db
+  await Users.findOne({ Username: req.body.Username }) //searches the db to see if a user with the requested username already exists
     .then((user)=> {
       if (user) {
+        //if such a user is found, send a response that it already exists
         return res.status(400).send(req.body.Username + 'already exists');
       } else {
         Users.create({
           Username: req.body.Username,
-          Password: req.body.Password,
+          Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday
         })
@@ -133,6 +153,11 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
 
 // DELETE user by username
 app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  const userToDelete = await Users.findOne({ Username: req.params.Username });
+
+  if (!userToDelete) { //this checks if the user to be deleted exists before checking authorization
+    return res.status(400).send(req.params.Username + ' was not found.');
+  }
     //Condition to check username in request vs logged-in username
     if(req.user.Username !== req.params.Username){
       return res.status(400).send('Permission denied, you are not authorized to delete other users. ');
@@ -152,7 +177,7 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
 });
 
 //READ all movies
-app.get('/movies', passport.authenticate('jwt', { session: false /* what does session:false mean? */}), async (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false /* configures Passport.js to use JWT authentication without creating a session */}), async (req, res) => {
   await Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
@@ -217,6 +242,10 @@ app.get('/users', passport.authenticate('jwt', { session: false }), async (req, 
 
 //GET information for a specific user by username
 app.get('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    //Condition to check username in request vs logged-in username
+    if(req.user.Username !== req.params.Username){
+      return res.status(400).send('Permission denied, you are not authorized to view other users\' information');
+    }
   await Users.findOne({ Username: req.params.Username })
     .then((user) => {
       res.json(user);
