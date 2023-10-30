@@ -10,7 +10,7 @@ const passport = require('passport'), //requires the Passport module
     ExtractJWT = passportJWT.ExtractJwt;
 
 passport.use(
-  new LocalStrategy( //defines basic HTTP authentication, uses Mongoose to check info in request body against info in database (password doesn't get checked here yet)
+  new LocalStrategy( //defines basic HTTP authentication, uses Mongoose to check info in request body against info in database
     {
       usernameField: 'Username',
       passwordField: 'Password',
