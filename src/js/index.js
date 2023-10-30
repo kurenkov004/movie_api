@@ -57,7 +57,7 @@ app.post('/users',
     .then((user)=> {
       if (user) {
         //if such a user is found, send a response that it already exists
-        return res.status(400).send(req.body.Username + 'already exists');
+        return res.status(400).send(req.body.Username + ' already exists');
       } else {
         Users.create({
           Username: req.body.Username,
@@ -266,6 +266,11 @@ app.use((err, req, res, next) => {
 });
 
 // listen for requests
-app.listen(8080, () => {
-  console.log('I\'m listening');
+// app.listen(8080, () => {
+//   console.log('I\'m listening');
+// });
+
+const port = process.env.PORT || 8080; //looks for a pre-configured port number in the environment variable
+app.listen (port, '0.0.0.0',() => {
+  console.log('I\m listening on Port ' + port);
 });
