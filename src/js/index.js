@@ -11,7 +11,10 @@ const Movies = Models.Movie;
 const Users = Models.User;
 
 //connects Mongoose to the MongoDB created earlier
-mongoose.connect('mongodb://localhost:27017/frDB', { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect('mongodb://localhost:27017/frDB', { useNewUrlParser: true, useUnifiedTopology: true });
+
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
 const app = express();
  
 app.use(morgan('common'));
