@@ -19,6 +19,8 @@ const app = express();
  
 app.use(morgan('common'));
 
+app.use(bodyParser.urlencoded({ extended: true }))
+
 app.use(bodyParser.json());
 
 const { check, validationResult } = require('express-validator'); //imports expresss validator library
