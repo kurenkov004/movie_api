@@ -30,7 +30,7 @@ userSchema.statics.hashPassword = (password) => { //function that does the actua
   return bcrypt.hashSync(password, 10);
 };
 
-userSchema.methods.validatePassword = (password) => { //function that compares submitted hashed passwords with the hashed passwords already stored in the db
+userSchema.methods.validatePassword = function(password) { //function that compares submitted hashed passwords with the hashed passwords already stored in the db
   return bcrypt.compareSync(password, this.Password);
 };
 
