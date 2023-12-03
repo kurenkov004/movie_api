@@ -182,7 +182,7 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
 });
 
 //READ all movies
-app.get('/movies', async (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false /* configures Passport.js to use JWT authentication without creating a session */}), async (req, res) => {
   await Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
