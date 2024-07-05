@@ -37,10 +37,15 @@ This is the server-side component of a "movies" web application. The application
 - URL: `/users`
 - HTTP method: POST
 - Request body: A JSON object holding data about new user
+
   _Example:_
+
   {Username: testuser01
+
    Password: testpassword01
+
    Email: testuser@gmail.com
+   
    Birthday: 01/05/1997
   }
 - Response body: a JSON object showing data about new user 
