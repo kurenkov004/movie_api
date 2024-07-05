@@ -33,31 +33,78 @@ This is the server-side component of a "movies" web application. The application
 - uuid _Library for generating unique identifiers_
 
 ## API Endpoints:
+
 ### Create a user
 - URL: `/users`
 - HTTP method: POST
-- Request body: A JSON object holding data about new user
+- Request body: A JSON object holding data about new user (see documentation.html for examples)
+- Response body: a JSON object showing data about new user (see documentation.html for examples)
 
-  _Example:_
+### Update user info
+- URL: `/users/:Username`
+- HTTP method: PUT
+- Request body: A JSON object holding updated user info (see documentation.html for examples)
+- Response body: a JSON object holding data about updated user (see documentation.html for examples)
 
-  {Username: testuser01
+### Update user info
+- URL: `/users/:Username`
+- HTTP method: PUT
+- Request body: A JSON object holding updated user info (see documentation.html for examples)
+- Response body: a JSON object holding data about updated user (see documentation.html for examples)
 
-   Password: testpassword01
+### Add movie to user's favorites
+- URL: `/users/:username/movies/:movieID`
+- HTTP method: POST
+- Request body: Username (logged in user) & MovieID, a unique _id number assigned to each movie in database
+- Response body: a JSON object holding data about updated user (see documentation.html for examples)
 
-   Email: testuser@gmail.com
-   
-   Birthday: 01/05/1997
-  }
-- Response body: a JSON object showing data about new user 
-  _Example:_
-  {"Username": "testuser01",
-   "Password": "testpassword01",
-   "Email": "testuser@gmail.com",
-   "Birthday": "1997-01-01T05:00:00.000Z",
-   "FavouriteMovies": [],
-   "_id": "6529b6d6a7fbe586c675000f"
-   "__v": 0
-  }
+### Remove a  movie from user's favorites
+- URL: `/users/:username/movies/:movieID`
+- HTTP method: DELETE
+- Request body:  Username (logged in user) MovieID, a unique _id number assigned to each movie in database
+- Response body: a JSON object holding data about updated user (see documentation.html for examples)
+
+### Delete a user by username
+- URL: `/users/:Username`
+- HTTP method: DELETE
+- Request body: Username (currently logged in user)
+- Response body: a message informing user the profile has been deleted
+
+### Get al users
+- URL: `/users/`
+- HTTP method: GET
+- Request body: None
+- Response body: a JSON object holding data about all users
+
+### Get a single user
+- URL: `/users/:Username`
+- HTTP method: GET
+- Request body: None
+- Response body: a JSON object holding data about searched user
+
+### Get all movies
+- URL: `/movies/`
+- HTTP method: GET
+- Request body: None
+- Response body: a JSON object holding data about all movies present in database (see documentation.html for examples)
+
+### Get one movie by title
+- URL: `/movies/:Title`
+- HTTP method: GET
+- Request body: None
+- Response body: a JSON object holding data about searched movie containing title, description, imagepath, id, director, genre, featured actors and its "featured" status (see documentation.html for examples)
+
+### Get genre info
+- URL: `/movies/:genre/:genreName`
+- HTTP method: GET
+- Request body: None
+- Response body: a JSON object holding data about searched genre (see documentation.html for examples)
+
+### Get director info
+- URL: `/movies/:directors/:directorName`
+- HTTP method: GET
+- Request body: None
+- Response body: a JSON object holding data about director (see documentation.html for examples)
 
 
 
