@@ -2,6 +2,8 @@
 ## App description
 This is the server-side component of a "movies" web application. The application will provide users with access to information about different movies, directors, and genres. Users will be able to sign up, update their profile information and create a list of favorite movies. This server-side project is responsible for creating a database to host the movie and user information, as well as an API to communicate with said database.
 
+## API base URL
+https://for-reel-d14227c07855.herokuapp.com/
 
 ## Project Criteria:
 ### Key Features:
